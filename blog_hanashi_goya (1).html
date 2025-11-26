@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hanashi Goya — Artigo de Arquitetura</title>
+  <style>
+.gallery-top-right { position:absolute; top:120px; right:30px; max-width:350px; }
+    body { font-family: 'Segoe UI', sans-serif; margin: 0 auto; background: #fdfaf7; color: #333; max-width: 900px; padding: 0 20px; }
+    header { background: #a286c1; padding: 3rem; text-align: center; font-size: 3rem; font-weight: 800; border-bottom: 4px solid #7ecae6; letter-spacing: 1px;}
+    .section { padding: 2rem 0; line-height: 1.7; margin: 0 auto; max-width: 750px; }
+    h2 { color: #7ecae6; font-size: 2rem; margin-bottom: 1rem; font-weight: 700; border-bottom: 4px double #a286c1; padding-bottom: 0.3rem;}
+    .gallery, .planos { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+    img { width: 300px; height: auto; border-radius: 10px; cursor: pointer; transition: transform 0.2s ease; }
+    img:hover { transform: scale(1.05); }
+    #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; }
+    #modal img { max-width: 90%; max-height: 90%; border-radius: 10px; }
+  
+/* Polimento final */
+body { line-height: 1.8; }
+img { box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+.section { margin-bottom: 3rem; }
+.gallery-top-right img { box-shadow: 0 4px 12px rgba(0,0,0,0.18); border: 2px solid #7ecae6; }
+header { box-shadow: 0 3px 10px rgba(0,0,0,0.15); border-radius: 0 0 12px 12px; }
+.planos img { border: 2px solid #a286c1; }
+
+/* Modo escuro */
+.dark-mode { background:#1a1a1a; color:#eaeaea; }
+.dark-mode header { background:#7ecae6 !important; border-bottom-color:#a286c1 !important; box-shadow:0 3px 10px rgba(255,255,255,0.1); }
+.dark-mode img { box-shadow:0 4px 12px rgba(255,255,255,0.15); border-color:#7ecae6 !important; }
+.dark-mode h2 { color:#7ecae6; border-bottom-color:#a286c1; }
+.dark-mode footer { background:#7ecae6; color:#000; border-top-color:#a286c1; }
+</style>
+</head>
+<body>
+<header style="background:#a286c1; padding:0.6rem 1.2rem; display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid #7ecae6;">
+    <span style="font-size:0.95rem; font-weight:700; color:#000;">Melissa Machado Oliveira dos Santos</span>
+    <span style="font-size:1.05rem; font-weight:800; color:#000;">Blog de Arquitetura</span>
+</header>
+
+<!-- Botão de modo escuro -->
+<button id="darkToggle" style="position:fixed; top:20px; right:20px; padding:10px 16px; background:#a286c1; color:#000; border:none; border-radius:8px; cursor:pointer; font-weight:700; box-shadow:0 3px 8px rgba(0,0,0,0.2); z-index:999;">Modo Escuro</button>
+<script>
+    const btn = document.getElementById('darkToggle');
+    btn.onclick = () => {
+        document.body.classList.toggle('dark-mode');
+        btn.textContent = document.body.classList.contains('dark-mode') ? 'Modo Claro' : 'Modo Escuro';
+    };
+</script>
+
+<!-- Galeria no topo à direita -->
+
+
+
+<div class="section">
+<h2>Sobre o Arquiteto</h2>
+<p>Daisuke Motoki é o arquiteto responsável pela concepção da obra. Nascido em Yamagata em 1978. Formado em arquitetura pela Universidade de Nihon em 2001. Mestrado pela Universidade de Tohoku em 2005. Professor em tempo parcial na Universidade de Tohoku a partir de 2013. Fundador do escritório que leva seu nome em 2018. E ganhador do Prêmio Tohoku de Arquitetura em 2022.<br><br>
+Seus projetos mais notáveis são a própria Hanashi Goya, o Centro de Emissão Zero Ishikari (em parceria com Taisei Design Planners Architects and Engineers) e A Casa em Akashi (em colaboração com o escritório Akio Isshiki Architects).<br><br>
+Sua especialidade é em projeto e supervisão de reformas e renovações. Devido a essa ser sua linha de trabalho não há grande número de projetos em sua autoria, apenas os citados anteriormente.</p>
+</div>
+
+<div class="section">
+<h2>A intenção por trás da obra</h2>
+<p>A intenção da obra é revitalizar uma cidade que pelo envelhecimento populacional e despovoamento devido a mudanças para cidades maiores, se torna cada vez menos movimentada.<br><br>
+A hospedagem que ela oferta para pequenos grupos e espaço para eventos de até 50 pessoas serve para trazer mais movimento para o comércio local.<br><br>
+O arquiteto que apoia “continuação de uma vida em abundância nesta terra” baseada no design de elementos como a vista, inclinações, santuário, plantas, solo, vento e flexibilidade de se adaptar a uma era de mudanças aceleradas fez uma construção flexível de diferentes formas, tanto estrutural quanto usual, visando a necessidade não só do cliente, mas de todo o contexto em que ela se insere.</p>
+</div>
+
+<div class="section">
+<h2>A Localização</h2>
+<p>A "Casa" Hanashi Goya está localizada em uma encosta, em uma região de vale, da Cordilheira de Zao, na cidade de Yamanobe na Província de Yagamata, no Japão.</p>
+<div class="gallery">
+  <img src="Imagem do WhatsApp de 2025-11-25 à(s) 10.11.51_a09aa506.jpg" onclick="openModal(this.src)">
+</div>
+</div>
+
+<div class="section">
+<h2>Mapeamento das proximidades</h2>
+<p>Yamanobe possui 61,36 km², com 14.174 habitantes em 4.839 domicílios, segundo dados de 2020. Assim, a densidade populacional é de 230 pessoas por km². Sendo uma densidade média a alta, para a proporção global, porém para o Japão é considerada baixa.<br><br>
+A região de construção de Hanashi Goya é demarcada pela prefeitura como área residencial, porém, nos 500 m² de diâmetro analisados, ainda podemos observar pontualmente alguns estabelecimentos comerciais, de serviços e inclusive industriais; sendo que a grande maioria das edificações é destinada à moradia. Também observamos o uso misto em edificações que contam com alguma atividade econômica dividindo espaço com o uso residencial. No entorno, é possível ver prédios institucionais como escola, biblioteca, centro comunitário e a antiga prefeitura. Ainda nesse espaçamento passa a Rota Nacional 458, saindo do perímetro também temos uma linha férrea.<br><br>
+As edificações do entorno são em grande parte de dois pavimentos, seguidas pelas de um pavimento e, em menor número, três pavimentos. Não foi observada edificação com mais de três pavimentos.<br><br>
+Alguns aspectos que chamaram a atenção: equipamentos instalados nas áreas externas, caracterizando adaptações necessárias com o passar do tempo; pequenas edificações separadas das moradias, constituídas de um pavimento, destinadas à garagem e, em alguns casos, à oficina conjuntamente; a quase inexistente separação entre terreno e rua em alguns pontos; sutil demarcação de terrenos; e um crescente uso de painéis solares em solo.<br><br>
+Observar o entorno foi enriquecedor para buscar entender um pouco sobre a lógica de morar nesse entorno. A edificação em relação à rua, a edificação com a outra edificação, uma área livre definindo um caminho - nos leva a pensar como se estrutura o público e o privado em Yamanobe. Mais à frente, ao analisar Hanashi Goya, esse tema retorna, entendendo assim a lógica do interior para o exterior.</p>
+<div class="gallery">
+  <img src="Imagem do WhatsApp de 2025-11-24 à(s) 23.53.10_5f9ca549.jpg" onclick="openModal(this.src)">
+  <img src="Imagem do WhatsApp de 2025-11-24 à(s) 23.53.10_4fde951a.jpg" onclick="openModal(this.src)">
+</div>
+</div>
+
+<div class="section">
+<h2>O Clima</h2>
+<p>Segundo a Classificação climática de Köppen, a cidade de Yamanobe é Dfa, o que representa um Clima Continental (D), sem estação seca (f) e com verão quente (a). A cidade tem diferença de temperatura sazonal bem marcada, em torno de -2,6 °C em janeiro, 23,9 °C em agosto e temperatura média anual de 10,1 °C. Em relação às chuvas, elas estão presentes durante todo o ano, porém são mais abundantes em setembro.</p>
+<div class="gallery">
+  <img src="Imagem do WhatsApp de 2025-11-24 à(s) 23.53.10_45e4f495.jpg" onclick="openModal(this.src)">
+</div>
+</div>
+
+<div class="section">
+<h2>Medidas Antissísmicas na Fundação</h2>
+<p>Buscando entender essa obra, é importante ressaltar que no Japão se adotam na construção medidas antisísmicas. Em que a estrutura e o terreno se fundem por isolamentos com o uso de materiais que absorvem e dissipam os impactos dos movimentos do solo, evitando a transmissão para a edificação, e promovendo um leve deslizamento, para um balanço mais seguro da mesma.</p>
+<div class="gallery">
+  <img src="Imagem do WhatsApp de 2025-11-24 à(s) 23.49.35_cbab8b34.jpg" onclick="openModal(this.src)">
+</div>
+</div>
+
+<div class="section">
+<h2>O problema e o briefing</h2>
+<p>Voltamos a alguns anos, quando essa parte da cidade era movimentada pelos passeios ao Castelo de Yamanobe, santuários e lojas no entorno da antiga prefeitura. Mas, com a mudança da prefeitura, o envelhecimento e saída de moradores da cidade, a região se tornou menos ativa. Assim surge a necessidade por parte do proprietário, um entusiasta e praticante de rakugo (teatro de comédia japonesa), de idealizar um negócio, no qual promoveria movimento cultural para a cidade, atraindo visitantes. Seu negócio inclui eventos culturais para até 50 pessoas, culinários para até 6 pessoas e de hospedagem, que atendem aos eventos promovidos no salão e hospedagem independentes dos eventos.</p>
+<div class="gallery">
+  <img src="Imagem do WhatsApp de 2025-11-24 à(s) 23.49.16_84395ad3.jpg" onclick="openModal(this.src)">
+</div>
+</div>
+
+<div class="section">
+<h2>O projeto segundo seu sistema construtivo e materiais</h2>
+<p>A pequena edificação é um complexo que no térreo conta com um salão, uma cozinha, banheiro e um jardim; no piso superior está a pousada e uma varanda. A pousada e o salão podem ser usados em conjunto ou separadamente, o que ressalta o caráter de flexibilidade, no qual foi pensado o negócio e desenvolvido o projeto e construção.<br><br>
+Comum em edificações modernas no Japão, foi adotado um sistema construtivo misto, com o uso de concreto armado e estrutura metálica. No qual foram colocadas fundações do tipo sapatas isoladas, recebendo as cargas dos pilares e vigas metálicas, essa fundação é isolada por algum material granular. A base tipo radiê delimita a área interna e já formata o piso por moldes. Essa base acompanha a topografia do terreno e se estabelece em dois níveis em uma leve inclinação.<br><br>
+As paredes se apresentam com espessuras diferentes, a depender de sua posição e função. As mais grossas geralmente são paredes de vedação da edificação, indicando o uso de multicamadas com preenchimento, possivelmente de espumas para melhor desempenho termoacústico, bem como isolamento da umidade. Enquanto as mais finas configuram as divisões entre espaços. Pelas imagens e textos, não foi possível distinguir claramente os materiais presentes nas paredes; vendo as representações das paredes divisórias, por exemplo, não está claro se são de gesso acartonado, madeira ou alvenaria. O que podemos é fazer uma leitura estrutural e dos acabamentos. Sobre os revestimentos, temos a madeira, um tipo de pintura feita a partir da própria terra do terreno e cerâmica.<br><br>
+As esquadrias são de madeira, deslizando em trilhos metálicos superiores e inferiores, o vidro permite que toda a fachada leste seja aberta para a cidade e para as montanhas.<br><br>
+Para o piso, como vimos no térreo, se apropriou da base com um acabamento polido para ser o piso sem um revestimento adicional. Já no piso superior, se adotou sobre a laje um piso de madeira, com exceção da parte molhada do banheiro que foi revestida com cerâmica.<br><br>
+Para o teto, em praticamente toda a área, se utilizou um forro de madeira, com exceção das áreas de serviço, onde vemos apenas uma pintura aplicada à laje.<br><br>
+Na área externa, existem vestígios de um antigo santuário, apropriados como caminhos no entorno da edificação e no jardim.<br><br>
+<h2>Referências</h2>
+<p>
+https://daisukemotokiarchitects.com/profile/<br>
+https://hanashigoya.com/<br>
+https://www.archdaily.com.br/br/985037/pousada-hanashi-goya-daisuke-motoki-architects<br>
+https://www.g-mark.org/en/gallery/winners/12489?unitCodes=15&years=2022<br>
+https://en.wikipedia.org/wiki/Yamanobe,_Yamagata#Climate<br>
+https://en.wikipedia.org/wiki/K%C3%B6ppen_climate_classification<br>
+Fundações antissísmicas no Japão, pelo Google Search
+</p><br><br></p>
+
+<div class="section">
+<h2>Desenhos, plantas e planificações</h2>
+<div class="planos">
+  <img src="Imagem do WhatsApp de 2025-11-24 à(s) 23.44.42_1f685a40.jpg" onclick="openModal(this.src)">
+  <img src="Imagem do WhatsApp de 2025-11-24 à(s) 23.44.36_6575e85b.jpg" onclick="openModal(this.src)">
+  <img src="Imagem do WhatsApp de 2025-11-24 à(s) 23.44.31_2b459a5c.jpg" onclick="openModal(this.src)">
+  <img src="Imagem do WhatsApp de 2025-11-24 à(s) 23.43.52_b8bbe984.jpg" onclick="openModal(this.src)">
+  <img src="Imagem do WhatsApp de 2025-11-24 à(s) 23.43.48_d4f91118.jpg" onclick="openModal(this.src)">
+  <img src="Imagem do WhatsApp de 2025-11-24 à(s) 23.43.44_1eee528b.jpg" onclick="openModal(this.src)">
+  <img src="Imagem do WhatsApp de 2025-11-24 à(s) 23.43.40_a25fee03.jpg" onclick="openModal(this.src)">
+  <img src="Imagem do WhatsApp de 2025-11-24 à(s) 23.43.34_ef0e1bbf.jpg" onclick="openModal(this.src)">
+  <img src="Imagem do WhatsApp de 2025-11-24 à(s) 23.43.29_3a1219c0.jpg" onclick="openModal(this.src)">
+  <img src="Imagem do WhatsApp de 2025-11-24 à(s) 23.43.24_bc2779ac.jpg" onclick="openModal(this.src)">
+</div>
+</div>
+
+<footer style="background: #7ecae6; padding: 2rem; text-align: center; margin-top: 4rem; font-size: 1rem; color: #5d4037; border-top: 3px solid #7ecae6;">
+    <p>Hanashi Goya — Artigo Acadêmico de Arquitetura</p>
+    <p>Desenvolvido por Melissa Machado Dos Santos</p>
+</footer>
+
+<!-- Botão Voltar ao Topo -->
+<button id="backToTop" style="position: fixed; bottom: 30px; right: 30px; padding: 12px 18px; background: #a286c1; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; display:none; transition: 0.3s;">Topo ↑</button>
+
+<!-- Script Modo Escuro + Voltar ao Topo + Hover Animado -->
+<script>
+// Modo escuro
+function toggleDarkMode() {
+  document.body.classList.toggle('dark');
+}
+
+// Mostrar botão voltar ao topo
+window.addEventListener('scroll', function() {
+  const btn = document.getElementById('backToTop');
+  if (window.scrollY > 300) btn.style.display = 'block';
+  else btn.style.display = 'none';
+});
+
+document.getElementById('backToTop').onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+</script>
+
+<style>
+/* Modo Escuro */
+.dark { background:#1a1a1a; color:#f2f2f2; }
+.dark h2 { color:#d8b8ff; }
+.dark footer { background:#222 !important; color:#eee !important; border-top-color:#d8b8ff !important; }
+
+/* Imagens com hover animado */
+.gallery img, .planos img {
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.gallery img:hover, .planos img:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+/* Botão modo escuro fixo */
+#darkModeBtn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #a286c1;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+</style>
+
+<button id="darkModeBtn" onclick="toggleDarkMode()">Modo Escuro</button>
